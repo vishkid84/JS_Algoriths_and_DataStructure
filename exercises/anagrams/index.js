@@ -8,6 +8,65 @@
 //   anagrams('RAIL! SAFETY!', 'fairy tales') --> True
 //   anagrams('Hi there', 'Bye there') --> False
 
-function anagrams(stringA, stringB) {}
+
+// -------------Method 1---------------
+// function anagrams(stringA, stringB) {
+// //     regexp to return only characters, then change all to lowercase
+//     stringA = stringA.replace(/[^\w]/g, "").toLowerCase();
+//     stringB = stringB.replace(/[^\w]/g, "").toLowerCase();
+
+//     // get an obect with all the characters with the number of its repetition for both strings
+//     let charsA = {};
+//     for(let char of stringA){
+//         charsA[char] = charsA[char] + 1 || 1;
+//     }
+
+//     let charsB = {};
+//     for(let char of stringB){
+//         charsB[char] = charsB[char] + 1 || 1;
+//     }
+    
+//     // if both strings have same length meaning they both would have same number of characters
+
+//     if(Object.keys(charsA).length !== Object.keys(charsB).length){
+//         return false;
+//     }
+
+//     for(let char in charsA){
+//         if(charsA[char] !== charsB[char]){
+//             return false;
+//         }
+//     }
+
+//     return true;
+// }
+
+
+// ------------Using chain function----------
+function anagrams(stringA, stringB) {
+    const aCharMap = buildCharMap(stringA);
+    const bCharMap = buildCharMap(stringB);
+
+    if(Object.keys(aCharMap).length !== Object.keys(bCharMap).length){
+        return false;
+    }
+
+    for(let char in aCharMap){
+        if(aCharMap[char] !== bCharMap[char]){
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function buildCharMap(str){
+    const charMap = {}
+    for(let char of str.replace(/[^\w]/g, "").toLowerCase()){
+        charMap[char] = charMap[char] + 1 || 1;
+    }
+
+    return charMap;
+}
 
 module.exports = anagrams;
